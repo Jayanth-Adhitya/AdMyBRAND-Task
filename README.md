@@ -1,4 +1,5 @@
 # Real-time WebRTC VLM — Multi-Object Detection
+## Task by Jayanth Adhitya
 
 This project demonstrates real-time multi-object detection using WebRTC for video streaming from a phone to a browser, with inference performed either client-side (WASM) or server-side (YOLOv8n ONNX).
 
