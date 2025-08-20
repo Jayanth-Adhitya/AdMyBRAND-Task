@@ -43,7 +43,6 @@ server-yolo/models/*.onnx
 server-yolo/yolov8n.pt
 
 # Docker
-*.dockerignore
 *.env
 docker-compose.override.yml
 
@@ -63,8 +62,6 @@ ngrok.log
 # Jupyter Notebooks
 .ipynb_checkpoints/
 
-# Metrics and generated files
-metrics.json
 
 # OS-specific
 .DS_Store

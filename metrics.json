@@ -1,0 +1,10 @@
+{
+  "room": "cev0ay",
+  "mode": "wasm",
+  "duration_s": 30,
+  "e2e_median_ms": 102,
+  "e2e_p95_ms": 120,
+  "processed_fps": 6.7,
+  "downlink_kbps": 1591,
+  "uplink_kbps": 0
+}
