@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebRTC VLM — Phone → Browser Detection</title>
+    <style>
+      :root { --bg:#0b0f17; --fg:#e6edf3; --muted:#9aa4af; --accent:#62a0ff; --ok:#22c55e; --warn:#f59e0b; }
+      html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,-apple-system,Segoe UI,Roboto;}
+      .wrap{max-width:1120px;margin:0 auto;padding:16px;}
+      header{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+      h1{font-size:20px;margin:0;}
+      .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+      .badge{padding:6px 10px;border-radius:14px;background:#121826;border:1px solid #1f2937;font-size:12px;}
+      .button{padding:8px 12px;border-radius:10px;border:1px solid #1f2937;background:#111827;color:var(--fg);cursor:pointer;}
+      .button:hover{background:#0f1624;}
+      .grid{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start;margin-top:14px;}
+      .panel{background:#0f1624;border:1px solid #1f2937;border-radius:14px;padding:14px;}
+      .video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#060a12;border-radius:12px;overflow:hidden;}
+      video, canvas#overlay{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+      .kv{display:grid;grid-template-columns:150px 1fr;gap:8px 12px;font-size:14px;}
+      .input{background:#0b1220;border:1px solid #1f2937;color:var(--fg);padding:8px 10px;border-radius:10px;}
+      .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+      .muted{color:var(--muted);}
+      img.qr{width:164px;height:164px;border-radius:10px;border:1px solid #1f2937;background:#0b1220;}
+      .mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;}
+      .hint{font-size:12px;color:#94a3b8;}
+      code.inline{background:#0b1220;border:1px solid #1f2937;padding:1px 6px;border-radius:6px;}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>WebRTC VLM — Phone → Browser Detection</h1>
+        <div class="toolbar">
+          <span class="badge"><span class="muted">Role:</span> <strong id="roleLabel">viewer</strong></span>
+          <span class="badge"><span class="muted">Mode:</span> <strong id="modeLabel">wasm</strong></span>
+          <span class="badge"><span class="muted">FPS:</span> <strong id="fpsLabel">0</strong></span>
+          <span class="badge"><span class="muted">Median:</span> <strong id="medLabel">–</strong> ms</span>
+          <span class="badge"><span class="muted">P95:</span> <strong id="p95Label">–</strong> ms</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="panel">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px;">
+            <div class="row">
+              <label class="muted" for="modeSel">Inference</label>
+              <select id="modeSel" class="input">
+                <option value="wasm">WASM (local)</option>
+                <option value="server">Server</option>
+              </select>
+              <button id="startBtn" class="button">Start</button>
+              <button id="benchBtn" class="button">Start Bench (30s)</button>
+            </div>
+            <div class="row">
+              <label class="muted" for="thr">Score</label>
+              <input id="thr" class="input" type="number" min="0" max="1" step="0.01" value="0.30" style="width:90px;" />
+              <label class="muted" for="maxd">MaxDet</label>
+              <input id="maxd" class="input" type="number" min="1" max="200" step="1" value="50" style="width:90px;" />
+            </div>
+          </div>
+          <div class="video-wrap">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Connect phone</h3>
+          <div class="row" style="align-items:flex-start;">
+            <img id="qr" class="qr" alt="QR"/>
+            <div>
+              <div class="mono" id="joinUrl"></div>
+              <div class="hint">Open this on your phone (Chrome/Safari), allow camera. This URL is proxied via ngrok.</div>
+              <div class="hint">Room: <span class="mono" id="roomHint"></span></div>
+            </div>
+          </div>
+
+          <h3>Stats</h3>
+          <div class="kv">
+            <div class="muted">Mode</div><div id="modeText">wasm</div>
+            <div class="muted">Downlink (kbps)</div><div id="downKbps">–</div>
+            <div class="muted">Uplink (kbps)</div><div id="upKbps">–</div>
+            <div class="muted">Processed FPS</div><div id="procFps">–</div>
+            <div class="muted">E2E Median</div><div id="e2eMed">–</div>
+            <div class="muted">E2E P95</div><div id="e2eP95">–</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+# Node.js
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+.env
+.env.local
+
+# Vite/Frontend build
+frontend/dist/
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+.venv/
+env/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Python server-yolo
+server-yolo/__pycache__/
+server-yolo/.venv/
+server-yolo/env/
+server-yolo/venv/
+server-yolo/*.pyc
+server-yolo/*.pyo
+server-yolo/*.pyd
+server-yolo/*.egg-info/
+server-yolo/.pytest_cache/
+server-yolo/.mypy_cache/
+server-yolo/models/*.onnx
+server-yolo/yolov8n.pt
+
+# Docker
+*.dockerignore
+*.env
+docker-compose.override.yml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+ngrok.log
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Metrics and generated files
+metrics.json
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# WebRTC/Project-specific
+gateway/node_modules/
+gateway/dist/
+gateway/.env
+gateway/.env.local
+
+# Misc
+*.sqlite3
+*.db

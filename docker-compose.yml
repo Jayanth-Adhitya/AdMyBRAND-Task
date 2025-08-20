@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  server:
+    build: ./server-yolo
+    container_name: vlm-server
+    ports: ["8000:8000"]
+
+  gateway:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+      args:
+        - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-}
+    container_name: vlm-gateway
+    environment:
+      - MODE=${MODE:-wasm}
+      - BACKEND_URL=http://server:8000
+      - NODE_ENV=production
+      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-}
+    ports: ["3000:3000"]
+    depends_on:
+      - server
